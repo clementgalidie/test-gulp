@@ -1,0 +1,23 @@
+# Gulp &mdash; tree view
+
+- _test-gulp_
+  - _src_
+  - __index.jade
+    - _assets_
+      - _css_
+        - __main.scss__
+      - _js_  
+        - __script1.js__
+        - __script2.js__
+  - _dist_ 
+    - __index.html__
+    - _assets_
+      - css
+        - __main.min.css__
+      - js
+        - __main.min.js__  
+- *node_modules*
+-  __gulpfile.js__
+-  __package.json__
+-  __README.md__
+-  __tree.md__

@@ -1,0 +1,28 @@
+$main-font-stack: 'Helvetica', 'Arial', sans-serif;
+
+body {
+	margin: 0;
+	font-family: $main-font-stack;
+}
+
+.menu {
+	margin: 0;
+	padding: 0;
+	letter-spacing: normal;
+
+	&-item {display: inline-block;}
+
+	&-item:not(:last-child) {margin-right: 1rem;}
+
+	&-link {transition: color .5s ease-out;}
+
+	&-link:hover,
+	&-link:focus {color: darken(lightblue, 20%);}
+}
+
+.test {
+	width: 100px;
+	height: 100px;
+	display: flex;
+	background-color: #444;
+}
