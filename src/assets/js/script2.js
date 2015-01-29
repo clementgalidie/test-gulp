@@ -1,2 +1,2 @@
 var name2 = 'Ronan';
-console.log('Hello ' + name2 + '!');
+console.log('Hello ' + name2 );

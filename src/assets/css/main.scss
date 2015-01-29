@@ -5,6 +5,11 @@ body {
 	font-family: $main-font-stack;
 }
 
+.mainContent-title {
+	margin: 0;
+	color: darken(#f00, 5%);
+}
+
 .menu {
 	margin: 0;
 	padding: 0;
@@ -14,7 +19,7 @@ body {
 
 	&-item:not(:last-child) {margin-right: 1rem;}
 
-	&-link {transition: color .5s ease-out;}
+	&-link {transition: color .2s ease-out;}
 
 	&-link:hover,
 	&-link:focus {color: darken(lightblue, 20%);}
