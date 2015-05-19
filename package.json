@@ -1,22 +1,32 @@
 {
   "name": "test-gulp",
   "version": "0.1.0",
-  "description": "This is a simple test",
+  "description": "Simple test with Gulp",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Clement Galidie",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clementgalidie/test-gulp.git"
+  },
+  "author": "Clement Galidie <galidie.clement@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/clementgalidie/test-gulp/issues"
+  },
+  "homepage": "https://github.com/clementgalidie/test-gulp#readme",
   "devDependencies": {
-    "gulp": "^3.8.10",
-    "gulp-autoprefixer": "^2.1.0",
-    "gulp-concat": "^2.4.3",
-    "gulp-connect": "^2.2.0",
-    "gulp-jade": "^0.11.0",
-    "gulp-minify-css": "^0.4.3",
-    "gulp-rename": "^1.2.0",
-    "gulp-sass": "^1.3.2",
-    "gulp-uglify": "^1.1.0"
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.3.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-jshint": "^1.10.0",
+    "gulp-livereload": "^3.8.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-minify-css": "^1.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.0.1",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0"
   }
 }

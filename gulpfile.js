@@ -1,60 +1,39 @@
-// Load all dependencies.
+'use strict';
+
+// Load gulp and all needed plugins.
 var gulp = require('gulp');
-var connect = require('gulp-connect');
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
-var minify = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var jade = require('gulp-jade');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
+var plugins = require('gulp-load-plugins')();
 
-// Set up a server with livereload.
-gulp.task('connect', function () {
-	connect.server({
-		port: 1337,
-		root: './src/',
-		livereload: true
-	});
-})
-
-// Task to compile jade into valid html + minify.
-gulp.task('jade', function () {
-	return gulp.src('./src/*.jade')
-		.pipe(jade())
-		.pipe(gulp.dest('./src/'))
-		.pipe(connect.reload());
-})
-
-// Task to compile sass to valid css + autoprefix + minify.
+// Task to compile scss into css (with sourcemaps), autoprefix and concat.
 gulp.task('sass', function () {
-	return gulp.src('./src/assets/css/*.scss')
-		.pipe(sass())
-		.pipe(autoprefixer({ browsers: ['last 2 versions'] }))
-		.pipe(gulp.dest('./src/assets/css/'))
-		.pipe(minify())
-		.pipe(rename('main.min.css'))
-		.pipe(gulp.dest('./dist/assets/css/'))
-		.pipe(connect.reload());
+  return gulp.src('./src/css/**/*.scss')
+    .pipe(plugins.sourcemaps.init())
+      .pipe(plugins.sass({outputStyle: 'compressed'}))
+    .pipe(plugins.sourcemaps.write())
+    .pipe(plugins.autoprefixer({browsers: ['last 2 versions']}))
+    .pipe(plugins.concat('main.css'))
+    // .pipe(plugins.minifyCss())
+    .pipe(gulp.dest('./src/css/'))
+    .pipe(plugins.livereload());
 });
 
-// Task to concat js files + uglify.
+// Task to 'hint' js code, uglify and concat.
 gulp.task('js', function () {
-	return gulp.src('./src/assets/js/*.js')
-		.pipe(concat('main.js'))
-		.pipe(gulp.dest('./src/assets/js/'))
-		.pipe(uglify())
-		.pipe(rename('main.min.js'))
-		.pipe(gulp.dest('./dist/assets/js/'))
-		.pipe(connect.reload());
+  return gulp.src('./src/js/**/*.js')
+    .pipe(plugins.jshint())
+    .pipe(plugins.jshint.reporter('default'))
+    .pipe(plugins.uglify())
+    .pipe(plugins.concat('main.min.js'))
+    .pipe(gulp.dest('./src/js/'))
+    .pipe(plugins.livereload());
 });
 
-// Task to watch each of the previous tasks.
+// Watch files for changes.
 gulp.task('watch', function () {
-	gulp.watch('./src/*.jade', ['jade']);
-	gulp.watch('./src/assets/css/*.scss', ['sass']);
-	gulp.watch('./src/assets/js/*.js', ['js']);
+  plugins.livereload.listen();
+  gulp.watch('./src/css/**/*.scss', ['sass']); // Watch scss files.
+  gulp.watch('./src/js/**/*.js', ['js']); // Watch js files.
 });
 
-// Default task to run all the process! :D
-gulp.task('default', ['connect', 'watch']);
+// Default task, run it by typing gulp in CLI mode.
+gulp.task('default', ['watch']);
