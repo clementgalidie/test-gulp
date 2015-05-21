@@ -30,7 +30,8 @@ gulp.task('sass', function () {
     .pipe(plugins.concat('main.css'))
     .pipe(plugins.minifyCss())
     .pipe(plugins.sourcemaps.write('.'))
-    .pipe(gulp.dest('./src/css/'))
+    .pipe(plugins.rename('main.min.css'))
+    .pipe(gulp.dest('./dist/css/'))
     .pipe(plugins.connect.reload());
 });
 
@@ -39,9 +40,10 @@ gulp.task('js', function () {
   return gulp.src('./src/js/**/*.js')
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('default'))
+    .pipe(plugins.concat('main.js'))
     .pipe(plugins.uglify())
-    .pipe(plugins.concat('main.min.js'))
-    .pipe(gulp.dest('./src/js/'))
+    .pipe(plugins.rename('main.min.js'))
+    .pipe(gulp.dest('./dist/js/'))
     .pipe(plugins.connect.reload());
 });
 
