@@ -1,4 +1,6 @@
-"use strict";
+(function () {
+  'use strict';
 
-var test2 = "Hello test2";
-console.log(test);
+  var foo = 'bar';
+  console.log(foo);
+})();
