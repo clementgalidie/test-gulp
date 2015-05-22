@@ -4,55 +4,50 @@
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 
-// This task'll set up a local server with livereload (without the use of a plugin).
+// Task to set up a local server + livereload (without the use of a browser plugin).
 gulp.task('connect', function () {
   plugins.connect.server({
-    root: './src/',
+    root: '.',
     port: 1337,
     livereload: true
   });
 });
 
-// Task to livereload HTML and minify.
+// Task to minify html files.
 gulp.task('html', function () {
-  return gulp.src('./src/*.html')
+  gulp.src('*.html')
     .pipe(plugins.minifyHtml())
-    .pipe(gulp.dest('./dist/'))
     .pipe(plugins.connect.reload());
 });
 
-// Task to compile scss into css (with sourcemaps), autoprefix, concat and minify.
+// Task to compile sass into css files.
 gulp.task('sass', function () {
-  return gulp.src('./src/css/**/*.scss')
+  gulp.src('src/sass/**/*.scss')
     .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.sass())
-    .pipe(plugins.autoprefixer({ browsers: ['last 2 versions'] }))
-    .pipe(plugins.concat('main.css'))
+    .pipe(plugins.sass({ style: 'expanded' }))
     .pipe(plugins.minifyCss())
-    .pipe(plugins.sourcemaps.write('.'))
+    .pipe(plugins.sourcemaps.write())
     .pipe(plugins.rename('main.min.css'))
-    .pipe(gulp.dest('./dist/css/'))
+    .pipe(gulp.dest('assets/css/'))
     .pipe(plugins.connect.reload());
 });
 
-// Task to 'hint' js code, uglify and concat.
+// Task to uglify js files.
 gulp.task('js', function () {
-  return gulp.src('./src/js/**/*.js')
-    .pipe(plugins.jshint())
-    .pipe(plugins.jshint.reporter('default'))
-    .pipe(plugins.concat('main.js'))
+  gulp.src('src/scripts/**/*.js')
     .pipe(plugins.uglify())
+    .pipe(plugins.concat('main.js'))
     .pipe(plugins.rename('main.min.js'))
-    .pipe(gulp.dest('./dist/js/'))
+    .pipe(gulp.dest('assets/js/'))
     .pipe(plugins.connect.reload());
 });
 
-// Watch files for changes.
+// Task to watch for file changes.
 gulp.task('watch', function () {
-  gulp.watch('./src/*.html', ['html']); // Watch html files.
-  gulp.watch('./src/css/**/*.scss', ['sass']); // Watch scss files.
-  gulp.watch('./src/js/**/*.js', ['js']); // Watch js files.
+  gulp.watch('*.html', ['html']);
+  gulp.watch('src/sass/**/*.scss', ['sass']);
+  gulp.watch('src/scripts/**/*.js', ['js']);
 });
 
-// Default task, run it by typing 'gulp' in CLI mode.
+// Default task, run it by typing 'gulp' in CLI.
 gulp.task('default', ['connect', 'watch']);
