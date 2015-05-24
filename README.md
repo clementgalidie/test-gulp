@@ -1,6 +1,6 @@
 # Gulp &mdash; simple test
 
-Basic gulfile.
+Basic gulpfile.
 
 ## How to run it?
 
