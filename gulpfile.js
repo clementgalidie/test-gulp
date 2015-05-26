@@ -19,6 +19,12 @@ var distFolders = {
   js: baseFolders.dist + 'js/'
 };
 
+// Function to handle errors.
+function handleErrors (err) {
+  console.log(err.toString());
+  this.emit('end');
+}
+
 // Task to set up a local server + livereload (without the use of a browser plugin).
 gulp.task('connect', function () {
   plugins.connect.server({
@@ -32,6 +38,8 @@ gulp.task('connect', function () {
 gulp.task('html', function () {
   return gulp.src(baseFolders.dev + '*.html')
     .pipe(plugins.minifyHtml())
+    .on('error', plugins.notify.onError("Error: <%= error.message %>"))
+    .on('error', handleErrors)
     .pipe(plugins.connect.reload());
 });
 
@@ -40,6 +48,8 @@ gulp.task('sass', function () {
   return gulp.src(devFolders.css + 'sass/**/*.scss')
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.sass({ style: 'expanded' }))
+    .on('error', plugins.notify.onError("Error: <%= error.message %>"))
+    .on('error', handleErrors)
     .pipe(plugins.minifyCss())
     .pipe(plugins.sourcemaps.write())
     .pipe(plugins.rename('main.min.css'))
@@ -52,6 +62,8 @@ gulp.task('js', function () {
   gulp.src(devFolders.js + 'scripts/**/*.js')
     .pipe(plugins.concat('main.js'))
     .pipe(plugins.uglify())
+    .on('error', plugins.notify.onError("Error: <%= error.message %>"))
+    .on('error', handleErrors)
     .pipe(plugins.rename('main.min.js'))
     .pipe(gulp.dest(devFolders.js))
     .pipe(plugins.connect.reload());
